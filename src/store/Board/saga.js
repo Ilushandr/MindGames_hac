@@ -36,7 +36,8 @@ function* fetchGetHintBestMoves_saga(action) {
       res.hint.forEach((key, i) => {
         newObj[key.move] = i+1
       })
-      yield put({ type: SINGLE_HELP, payload: newObj})
+      console.log(newObj)
+      yield put({ type: SINGLE_HELP, payload: {newObj, player: 'main'}})
     }
   } catch (e) {
     //throw e;
@@ -49,10 +50,7 @@ function* fetchGetBestMovesEnemy_saga(action) {
     const res = yield call(helpBestMovesEnemy, getToken(), payload.game_id, payload.count);
     if (res.hint) {
       let newObj = {};
-      res.hint.forEach((key, i) => {
-        newObj[key.move] = i+1
-      })
-      yield put({ type: SINGLE_HELP, payload: newObj})
+      yield put({ type: SINGLE_HELP, payload: {obj: newObj, player: 'enemy'}})
     }
   } catch (e) {
     //throw e;
@@ -105,7 +103,7 @@ function* fetchGetHintHeatmapZone_saga(action) {
   try {
     const res = yield call(helpHeatmapZone, getToken(), payload.game_id, payload.isQuarter);
     if (res.hint) {
-      yield put({ type: MAP_HELP, payload: { zone: res.hint, isQuarter: payload.isQuarter}})
+      yield put({ type: MAP_HELP, payload: { zone: res.hint, isQuarter: payload.isQuarter, player: 'main'}})
     }
   } catch (e) {
     //throw e;
@@ -117,7 +115,7 @@ function* fetchGetHintHeatmapZoneEnemy_saga(action) {
   try {
     const res = yield call(helpHeatmapZoneEnemy, getToken(), payload.game_id, payload.isQuarter);
     if (res.hint) {
-      yield put({ type: MAP_HELP, payload: { zone: res.hint, isQuarter: payload.isQuarter}})
+      yield put({ type: MAP_HELP, payload: { zone: res.hint, isQuarter: payload.isQuarter, player: 'enemy'}})
     }
   } catch (e) {
     //throw e;

@@ -17,6 +17,7 @@ import {
   hintShowBest,
   setScoresWinner,
   hintBestMoves,
+  hintBestMovesEnemy
 } from "../../store/Board/actions";
 
 import { clearGameId } from "../../store/GameCreate/actions";
@@ -201,7 +202,16 @@ const GameBoard = ({ history }) => {
     if (type === "single") {
       dispatch(setBlocked(true))
       setHelpType("single");
-      dispatch(hintBestMoves(game_id, count));
+      switch (id) {
+        case 1:
+          dispatch(hintBestMoves(game_id, count));
+          break;
+        case 5:
+          dispatch(hintBestMovesEnemy(game_id, count));
+          break;
+        default:
+
+      }
 
     }
     if (type === "multiple") {

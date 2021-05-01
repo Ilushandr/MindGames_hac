@@ -88,16 +88,6 @@ const Help = ({
       Лучший ход врага
     </HelpItem>
 
-    best_move = <HelpItem
-      active={activeHelpId === 1}
-      onClick={() =>
-        scores && handleHelp({ type: "single", id: 1, count: 1 })
-      }
-    >
-      Лучший ход
-    </HelpItem>
-
-
   }
   return (
     <Wrapper>

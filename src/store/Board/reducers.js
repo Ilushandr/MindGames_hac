@@ -62,7 +62,8 @@ export const boardReducer = (state = initialState, action) => {
         var {
           mapStones,
           classNamesMapStones
-        } = action.payload.isQuarter ? MAP_QUARTERS[action.payload.zone] : MAP_HALF[action.payload.zone];
+        } = action.payload.isQuarter ? MAP_QUARTERS(action.payload.player)[action.payload.zone]
+        : MAP_HALF(action.payload.player)[action.payload.zone];
       } else {
         var mapStones = {};
         var classNamesMapStones = {};
@@ -73,9 +74,15 @@ export const boardReducer = (state = initialState, action) => {
               let sign = alpha[rowId];
               let coord = `${sign}${(colId + 1)}`;
               mapStones[coord] = "circle"
+              if (action.payload.player === 'main'){
               classNamesMapStones[coord] = `redstone size-${cell}`
+            } else {
+              classNamesMapStones[coord] = `greenstone size-${cell}`
             }
-          })
+
+            }
+            }
+          )
         })
       }
 
