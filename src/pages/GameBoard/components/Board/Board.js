@@ -46,6 +46,7 @@ const Board = ({
     (state) => state.board.classNamesMapStones
   );
 
+
   const handleTurn = (stonePosition) => {
     client.send(JSON.stringify([7, "go/game", {command: "move", token: "1cfc52aacaba0507e66d74cd878020f071457220", place: stonePosition.toString().toLowerCase(), game_id: 8}]));
     let valid = true;

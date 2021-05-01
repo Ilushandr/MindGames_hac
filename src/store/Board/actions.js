@@ -11,7 +11,12 @@ import {
   GET_HINT_HEATMAP_ZONE,
   SET_BLOCKED,
   MAP_STONES,
-  GET_SCORES_WINNER
+  GET_SCORES_WINNER,
+  GET_HINT_WORST_MOVE_ENEMY,
+  GET_HINT_HEATMAP_ZONE_ENEMY,
+  GET_HINT_SHOW_BEST_ENEMY,
+  GET_HINT_BEST_MOVES_ENEMY,
+  GET_HINT_FUTURE_MOVES
 } from "./types";
 
 export const hintHeatmapFull = (game_id) => ({
@@ -61,19 +66,48 @@ export const hintBestMoves = (game_id, count) => ({
   payload: {game_id: game_id, count: count}
 });
 
+export const hintBestMovesEnemy = (game_id, count) => ({
+  type: GET_HINT_BEST_MOVES_ENEMY,
+  payload: {game_id: game_id, count: count}
+});
+
 export const hintShowBest = (game_id, moves) => ({
   type: GET_HINT_SHOW_BEST,
   payload: {game_id: game_id, moves: moves}
 });
+
+export const hintShowBestEnemy = (game_id, moves) => ({
+  type: GET_HINT_SHOW_BEST_ENEMY,
+  payload: {game_id: game_id, moves: moves}
+});
+
 
 export const hintHeatmap = (game_id) => ({
   type: GET_HINT_HEATMAP,
   payload: {game_id: game_id}
 });
 
+
 export const hintHeatmapZone = (game_id, isQuarter) => ({
   type: GET_HINT_HEATMAP_ZONE,
   payload: {game_id: game_id, isQuarter}
+
 });
 
+export const hintHeatmapZoneEnemy = (game_id, isQuarter) => ({
+  type: GET_HINT_HEATMAP_ZONE_ENEMY,
+  payload: {game_id: game_id, isQuarter}
 
+});
+
+export const hintWorstMoveEnemy = (game_id, move) => ({
+  type: GET_HINT_WORST_MOVE_ENEMY,
+  payload: {game_id: game_id, move: move}
+
+});
+
+export const hintFutureMoves = (game_id, count) => ({
+  type: GET_HINT_FUTURE_MOVES,
+  payload: {game_id: game_id, count: count}
+
+});

@@ -8,6 +8,7 @@ import Help from "./components/Help/Help";
 import {
   hintHeatmapFull,
   hintHeatmapZone,
+  hintHeatmapZoneEnemy,
   markersClear,
   multipleHelp,
   setWinnerUser,
@@ -73,7 +74,7 @@ const GameBoard = ({ history }) => {
   const [classNames, setClassNames] = useState({})
   const dispatch = useDispatch();
   const [times, setTimes] = useState({playerOne: 0, playerTwo: 0})
-  
+
 
   useEffect(() => {
     if (Object.keys(multipleHint).length === multipleCount) {
@@ -201,6 +202,7 @@ const GameBoard = ({ history }) => {
       dispatch(setBlocked(true))
       setHelpType("single");
       dispatch(hintBestMoves(game_id, count));
+
     }
     if (type === "multiple") {
       setHelpType("multiple");
@@ -218,6 +220,9 @@ const GameBoard = ({ history }) => {
           break;
         case HEATMAP_ZONE_QUARTER:
           dispatch(hintHeatmapZone(game_id, true));
+          break;
+        case 17:
+          dispatch(hintHeatmapZoneEnemy(game_id, true));
           break;
       }
     }

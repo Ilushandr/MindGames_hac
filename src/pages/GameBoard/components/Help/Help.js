@@ -30,6 +30,13 @@ const HelpItem = styled.div`
   cursor: pointer;
 `;
 
+const InactiveHelpItem = styled.div`
+  width: 48%;
+  margin-bottom: 10px;
+  background: #a6a6a6;
+  padding: 10px;
+`;
+
 const Help = ({
     enemyPass,
     stepColor,
@@ -41,8 +48,57 @@ const Help = ({
     handleHelp,
     activeHelpId,
     scores,
-    times
+    times,
+    turns
   }) => {
+    let best_quart;
+    let best_quart_enemy;
+    let best_move_enemy;
+    let best_move;
+
+  if (stepMain < 1){
+    best_quart = <InactiveHelpItem>В какой четверти находится лучший ход?</InactiveHelpItem>;
+    best_quart_enemy = <InactiveHelpItem>В какой четверти доски сейчас лучший ход врага?</InactiveHelpItem>;
+    best_move_enemy = <InactiveHelpItem>Лучший ход противника</InactiveHelpItem>;
+  } else if (stepMain < 10){
+    best_quart = <HelpItem
+      active={activeHelpId === HEATMAP_ZONE_QUARTER}
+      onClick={() =>
+        scores && handleHelp({ type: "map", id: HEATMAP_ZONE_QUARTER })
+      }
+    >
+      В какой четверти доски сейчас лучший ход?
+    </HelpItem>;
+
+    best_quart_enemy = <HelpItem
+      active={activeHelpId === 17}
+      onClick={() =>
+        scores && handleHelp({ type: "map", id: 17 })
+      }
+    >
+      В какой четверти доски сейчас лучший ход врага?
+    </HelpItem>
+
+    best_move_enemy = <HelpItem
+      active={activeHelpId === 5}
+      onClick={() =>
+        scores && handleHelp({ type: "single", id: 5, count: 1 })
+      }
+    >
+      Лучший ход врага
+    </HelpItem>
+
+    best_move = <HelpItem
+      active={activeHelpId === 1}
+      onClick={() =>
+        scores && handleHelp({ type: "single", id: 1, count: 1 })
+      }
+    >
+      Лучший ход
+    </HelpItem>
+
+
+  }
   return (
     <Wrapper>
       <Players
@@ -56,39 +112,10 @@ const Help = ({
         times={times}
       />
       <HelpWrapper>
-        <HelpItem
-          active={activeHelpId === 1}
-          onClick={() =>
-            scores && handleHelp({ type: "single", id: 1, count: 1 })
-          }
-        >
-          Лучший ход
-        </HelpItem>
-        <HelpItem
-          active={activeHelpId === HEATMAP_FULL}
-          onClick={() =>
-            scores && handleHelp({ type: "map", id: HEATMAP_FULL })
-          }
-        >
-          Тепловая карта всей доски. Детализированная
-        </HelpItem>
-        <HelpItem
-          active={activeHelpId === 16}
-          onClick={() =>
-            scores &&
-            handleHelp({ type: "multiple", multipleHandleCount: 4, id: 16 })
-          }
-        >
-          Показать лучший из заданных 3 ходов
-        </HelpItem>
-        <HelpItem
-          active={activeHelpId === HEATMAP_ZONE_QUARTER}
-          onClick={() =>
-            scores && handleHelp({ type: "map", id: HEATMAP_ZONE_QUARTER })
-          }
-        >
-          В какой четверти доски сейчас лучший ход?
-        </HelpItem>
+        {best_quart}
+        {best_quart_enemy}
+        {best_move_enemy}
+        {best_move}
         <HelpItem
           active={activeHelpId === 34}
           onClick={() => scores && handleHelp({ type: "score", id: 34 })}
