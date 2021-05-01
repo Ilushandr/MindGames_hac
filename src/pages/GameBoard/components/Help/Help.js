@@ -30,6 +30,13 @@ const HelpItem = styled.div`
   cursor: pointer;
 `;
 
+const InactiveHelpItem = styled.div`
+  width: 48%;
+  margin-bottom: 10px;
+  background: #a6a6a6;
+  padding: 10px;
+`;
+
 const Help = ({
     enemyPass,
     stepColor,
@@ -41,7 +48,8 @@ const Help = ({
     handleHelp,
     activeHelpId,
     scores,
-    times
+    times,
+    turns
   }) => {
   return (
     <Wrapper>
@@ -56,14 +64,20 @@ const Help = ({
         times={times}
       />
       <HelpWrapper>
-        <HelpItem
-          active={activeHelpId === 1}
-          onClick={() =>
-            scores && handleHelp({ type: "single", id: 1, count: 1 })
-          }
-        >
-          Лучший ход
-        </HelpItem>
+        if (stepMain < 3){
+          <InactiveHelpItem>
+            Лучший ход
+          </InactiveHelpItem>
+        }else{
+          <HelpItem
+            active={activeHelpId === 1}
+            onClick={() =>
+              scores && handleHelp({ type: "single", id: 1, count: 1 })
+            }
+          >
+            Лучший ход
+          </HelpItem>
+        }
         <HelpItem
           active={activeHelpId === HEATMAP_FULL}
           onClick={() =>
