@@ -32,13 +32,12 @@ function* fetchGetHintBestMoves_saga(action) {
   const { payload } = action;
   try {
     const res = yield call(helpBestMoves, getToken(), payload.game_id, payload.count);
-    console.log(res.hint)
     if (res.hint) {
       let newObj = {};
       res.hint.forEach((key, i) => {
         newObj[key.move] = i+1
       })
-      yield put({ type: SINGLE_HELP, payload: {newObj, player: 'main'}})
+      yield put({ type: SINGLE_HELP, payload: newObj})
     }
   } catch (e) {
     //throw e;
@@ -54,7 +53,7 @@ function* fetchGetBestMovesEnemy_saga(action) {
       res.hint.forEach((key, i) => {
         newObj[key.move] = i+1
       })
-      yield put({ type: SINGLE_HELP, payload: {newObj, player: 'enemy'}})
+      yield put({ type: SINGLE_HELP, payload: newObj})
     }
   } catch (e) {
     //throw e;
