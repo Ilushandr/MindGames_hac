@@ -5,7 +5,7 @@ import {
   HEATMAP_FULL,
   HEATMAP_ZONE_QUARTER,
 } from "./types";
-import {Accordion, Card, Button} from "react-bootstrap"
+import {Accordion, Card, Button, OverlayTrigger, Tooltip} from "react-bootstrap"
 
 const Wrapper = styled.div`
   width: 46%;
@@ -52,6 +52,7 @@ const Help = ({
     times,
     turns
   }) => {
+    let phase;
     let best_quart;
     let best_quart_enemy;
     let best_move_enemy;
@@ -74,8 +75,9 @@ const Help = ({
 
 
   if (stepMain < 1){
-
+    phase = "0";
   } else if (stepMain < 7){
+    phase = "1";
     best_quart = <HelpItem
       active={activeHelpId === HEATMAP_ZONE_QUARTER}
       onClick={() =>
@@ -112,6 +114,7 @@ const Help = ({
       Лучший ход
     </HelpItem>
   } else if (stepMain < 45){
+    phase = "2";
     heatmap = <HelpItem
       active={activeHelpId === HEATMAP_FULL}
       onClick={() =>
@@ -140,6 +143,7 @@ const Help = ({
         Худший ход врага
       </HelpItem>
   } else {
+    phase = "3";
     three_best_moves = <HelpItem
       active={activeHelpId === 1}
       onClick={() =>
@@ -178,11 +182,22 @@ const Help = ({
           Кто побеждает на данный момент?
         </HelpItem>
         </div>
-      <Accordion defaultActiveKey="1">
+      <Accordion defaultActiveKey={phase}>
         <Card>
-          <Accordion.Toggle as={Card.Header} eventKey="1">
-            <h3>I Этап (<em>Фусэки</em>)</h3>
-          </Accordion.Toggle>
+          <OverlayTrigger
+            key="11"
+            placement="top"
+            overlay={
+              <Tooltip id="11">
+                На этом этапе наиболее выгодно занимать угловые территории
+              </Tooltip>
+            }
+          >
+            <Accordion.Toggle as={Card.Header} eventKey="1">
+              <h3>I Этап (<em>Фусэки</em>)</h3>
+            </Accordion.Toggle>
+          </OverlayTrigger>
+
           <Accordion.Collapse eventKey="1">
             <Card.Body>
               <div style={{width: "100%"}}>
@@ -192,11 +207,21 @@ const Help = ({
             </Card.Body>
           </Accordion.Collapse>
         </Card>
-        <Card>
-          <Accordion.Toggle as={Card.Header} eventKey="2">
-            <h3>II Этап (<em>Тюбан</em>)</h3>
 
-          </Accordion.Toggle>
+        <Card>
+        <OverlayTrigger
+                key="21"
+                placement="top"
+                overlay={
+                  <Tooltip id="21">
+                    На этом этапе выгоднее всего занимать пограничные с соперником территории и заполнять свои.
+                  </Tooltip>
+                }
+              >
+                <Accordion.Toggle as={Card.Header} eventKey="2">
+                  <h3>II Этап (<em>Тюбан</em>)</h3>
+                </Accordion.Toggle>
+              </OverlayTrigger>
           <Accordion.Collapse eventKey="2">
             <Card.Body>
               <div style={{width: "100%"}}>
@@ -207,10 +232,21 @@ const Help = ({
             </Card.Body>
           </Accordion.Collapse>
         </Card>
+
         <Card>
-          <Accordion.Toggle as={Card.Header} eventKey="3">
-            <h3>III Этап (<em>Ёсэ</em>)</h3>
-          </Accordion.Toggle>
+          <OverlayTrigger
+                  key="31"
+                  placement="top"
+                  overlay={
+                    <Tooltip id="31">
+                      На этом этапе выгоднее бороться за центр карты. Также, в основном, на этой стадии просходит захват камней соперника
+                    </Tooltip>
+                  }
+                >
+                  <Accordion.Toggle as={Card.Header} eventKey="3">
+                    <h3>III Этап (<em>Ёсэ</em>)</h3>
+                  </Accordion.Toggle>
+                </OverlayTrigger>
           <Accordion.Collapse eventKey="3">
             <Card.Body>
               <div style={{width: "100%"}}>
