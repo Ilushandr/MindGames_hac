@@ -17,7 +17,8 @@ import {
   hintShowBest,
   setScoresWinner,
   hintBestMoves,
-  hintBestMovesEnemy
+  hintBestMovesEnemy,
+  hintWorstMoveEnemy
 } from "../../store/Board/actions";
 
 import { clearGameId } from "../../store/GameCreate/actions";
@@ -209,6 +210,10 @@ const GameBoard = ({ history }) => {
         case 5:
           dispatch(hintBestMovesEnemy(game_id, count));
           break;
+        case 12:
+          console.log('dispatch worst enemy move')
+          dispatch(hintWorstMoveEnemy(game_id, true));
+          break;
         default:
 
       }
@@ -223,8 +228,7 @@ const GameBoard = ({ history }) => {
       dispatch(setBlocked(true))
       setHelpType("map");
       setMapType("map");
-      switch (id)
-      {
+      switch (id) {
         case HEATMAP_FULL:
           dispatch(hintHeatmapFull(game_id));
           break;
